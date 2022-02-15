@@ -1,7 +1,19 @@
 const express =require('express')
 const router =express.Router()
-const authcontroller =require('../../controllers/authController')
+const authcontroller =require('../../controllers/admincontroller/admincontroller')
 
 router
     .route('/AlluserDetails')
-    .get()
+    .get(authcontroller.getAllUserDetails)
+
+
+
+router.route('/getAllUserQuery').get(authcontroller.getAllUserQuer)
+
+router.route('/delete/:id').get(authcontroller.deleteUser)
+
+
+
+ module.exports =router   
+
+

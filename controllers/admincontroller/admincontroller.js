@@ -1,65 +1,9 @@
 const User =require('../../model/admin')
+const Query =require('../../model/Query')
 const jwt =require('jsonwebtoken')
+
 const  adminSecretKey ="ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
 
-
-
-
-
-
-// exports.signup =async(req,res,next)=>{
-//      console.log(req.body)
-//      try{
-//         const {name,email,Password,PasswordCofirm} =req.body
-//         User.findOne({email:email},(err,user)=>{
-//               if(user){
-//                    res.status(202).json({
-//                         status:"Accepted",
-//                         message:'user Already is Register',
-//                         HowToCreateUsreSignup:req.requestTime,
-//                    })
-//               }else{
-//                const newUser = new User({
-//                     name,
-//                     email,
-//                     Password,
-//                     PasswordCofirm,
-//                     role:'admin'
-//                   })
-//                 newUser.save(err=>{
-//                      if(err){
-//                       res
-//                          .status(500)
-//                          .json({
-//                          status:"fail",
-//                          message:err,
-//                          HowToCreateUsreSignup:req.requestTime
-//                      })
-//                      }else{
-//                          res
-//                            .status(201) 
-//                            .json({
-//                               status:"Sucess",
-//                               message:'user Reqisterd Sucessfully',
-//                               HowToCreateUsreSignup:req.requestTime,
-//                            })
-//                      }
-//                 })
-                
-                  
-//               }
-//          })
-          
-//      }catch(err){
-//           res
-//           .status(500)
-//           .json({
-//           status:"fail",
-//           message:err,
-//           HowToCreateUsreSignup:req.requestTime
-//       })
-//      }
-// }
 
 
 
@@ -102,8 +46,9 @@ exports.login =async(req,res,next)=>{
               //           user,
               //           token
               // } )  
+              console.log(token,"vdj")
                  res.cookie('jwt',token,{ httpOnly: true, secure: true, maxAge: 3600000 })
-                 res.redirect('/user')
+                 res.send("<h1>Hello codesoftic</h1>");
            }else{
                 res.status(401).json({
                      satusCode:401,
@@ -119,4 +64,37 @@ exports.login =async(req,res,next)=>{
               HowToCreateUsreSignup:req.requestTime
         })
      }
+}
+
+
+
+
+exports.getAllUserDetails =async(req,res,next)=>{
+     try{
+          const user = await User.find({role:'user'})
+          res.send(user)
+     }catch(err){
+          res.send(500)
+     }
+     
+
+}
+
+
+
+exports.getAllUserQuer =async(req,res,next)=>{
+     try{
+        const query = await Query.find().populate("users", "-Password")
+        res.send(query);
+     }catch(err){
+          res.sendStatus(500)
+     }
+}
+
+
+
+exports.deleteUser =async(req,res,next)=>{
+     console.log(req.params.id)
+     const deleteuser =await User.deleteOne({_id:req.params.id})
+     res.send("user delete Sucessfully")
 }

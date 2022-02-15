@@ -3,11 +3,22 @@ const Query =require('../../model/Query')
 const fs =require('fs')
 const jwt =require('jsonwebtoken')
 const SecretKey ="vhdscsjfcsufjscvsvcsakvcMcvgwgad"
+const path =require('path')
+const routerdash=path.join(__dirname,'../../public/upload/document/')
+console.log(routerdash)
 
+// fs.readFile('routerdash/1644823687282-562823121-1587544700099.jpeg','utf-8',(err,data)=>{
+//      if (err) {
+//           console.error(err);
+//           return
+//         }
+//         console.log(data);
+// })
 
 
 exports.userPanel =async(req,res,next)=>{
      const data = await Query.find({users:req.data.userId}).populate('users','-role')
+     console.log(data)
      const admin =await User.findOne({role:'admin'})
      res.render('home',{
           data:data,
@@ -191,29 +202,17 @@ exports.logout=async(req,res,next)=>{
           res.redirect('/login')  
 }
 
-//  exports.getAllUsers =async(req,res,next)=>{  
-//         try{
-//              const user =await User.find({})
-//               res.status(201).json({
-//                    message:"userData",
-//                    user:[user]
-//               })
-//         }catch(err){
-//             res.status(500).json({
-//                  message:'fail'
-//             })
-//         }
 
-//  }
 
 exports.Query =async(req,res,next)=>{
    try{
        let files =req.files.avatar
+       console.log(files)
        var mutliplefiles =[]
         files.map((file,index)=>{
-          mutliplefiles.push(file.path)
+          mutliplefiles.push(file.filename)
         })
-      
+      console.log(mutliplefiles,"vikas")
      
      const {Create,Review,Payroll,End_of_Service,Policy_and_Procedure,Talent_Acquisition,Training_and_Coaching} =req.body
 
@@ -229,6 +228,20 @@ exports.Query =async(req,res,next)=>{
 }
 
 
+
+exports.getView=async(req,res,next)=>{
+     try{
+           console.log(req.params.id,"vikas")
+            const query = await Query.findOne({_id:req.params.id})
+            console.log(query.avatar)
+           res.render('view',{
+             data:query.avatar
+           })
+
+     }catch(err){
+          res.sendStatus(500)
+     }
+} 
 
 
 

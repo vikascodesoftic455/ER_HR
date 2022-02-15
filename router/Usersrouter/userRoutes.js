@@ -66,7 +66,12 @@ router
     .post(
         isAuthentication,
         Upload.fields([{ name: 'avatar', maxCount: 6}]),
-        authController.Query)
+        authController.Query
+    )
+
+
+
+router.route('/view/:id').get(authController.getView)  
 
 
    module.exports=router
