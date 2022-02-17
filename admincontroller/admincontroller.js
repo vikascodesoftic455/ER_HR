@@ -8,7 +8,7 @@ const  adminSecretKey ="ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
 
 
 exports.adminLogInpage =(req,res,next)=>{
-     console.log("apple")
+     res.send("<h1>code</h1>")
      res.render('ADmin/login')
  }
 
