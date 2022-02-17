@@ -16,7 +16,7 @@
 
 
  /// Server that can be start
-const port  =8000
+const port  =process.env.PORT || 8000
 
 
  // Body parser,rendering data body into req.body
