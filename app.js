@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:true,limit:'100kb'}))
 app.use(express.json({limit:'100kb'}))
 
 
-app.set('views','template')
+app.set('views','Template')
 app.set('view engine','ejs')
 
 
