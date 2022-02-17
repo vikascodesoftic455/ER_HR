@@ -5,20 +5,11 @@ const jwt =require('jsonwebtoken')
 const SecretKey ="vhdscsjfcsufjscvsvcsakvcMcvgwgad"
 const path =require('path')
 const routerdash=path.join(__dirname,'../../public/upload/document/')
-console.log(routerdash)
 
-// fs.readFile('routerdash/1644823687282-562823121-1587544700099.jpeg','utf-8',(err,data)=>{
-//      if (err) {
-//           console.error(err);
-//           return
-//         }
-//         console.log(data);
-// })
 
 
 exports.userPanel =async(req,res,next)=>{
      const data = await Query.find({users:req.data.userId}).populate('users','-role')
-     console.log(data)
      const admin =await User.findOne({role:'admin'})
      res.render('home',{
           data:data,
@@ -33,7 +24,6 @@ exports.signupPage =(req,res,next)=>{
 
 
 exports.signup =async(req,res,next)=>{
-     console.log(req.body)
      try{
         const {name,email,Password,PasswordCofirm} =req.body
         User.findOne({email:email},(err,user)=>{
@@ -92,7 +82,6 @@ exports.LogInpage =(req,res,next)=>{
 exports.login =async(req,res,next)=>{
       try{ 
             const {email,password} =req.body
-            console.log(email,password)
             if(!email || !password){
                res
                  .statusS(400)
@@ -101,7 +90,6 @@ exports.login =async(req,res,next)=>{
                         satusCode:400
                     })
             }
-            console.log(email,password)
             const user =await User.findOne({
                $and:[
                     {email:email},
@@ -113,15 +101,7 @@ exports.login =async(req,res,next)=>{
                 var token = jwt.sign({
                     userId:user.id
                },SecretKey,{ expiresIn :'1h' })
-                  
-               // res
-               //      .status(202)
-               //      .json({
-               //           statuscode:202,
-               //           message:"User Login scucessfuly Login SucessFully",
-               //           user,
-               //           token
-               // } )  
+                   
                   res.cookie('jwt',token,{ httpOnly: true, secure: true, maxAge: 3600000 })
                   res.redirect('/user')
             }else{
@@ -146,7 +126,6 @@ exports.dashboard =async(req,res,next)=>{
      try{
           const id =req.data.userId
           const UserData =awaitUser.findOne({_id:id})
-          console.log( UserData)
          if(!UserData){
              res.status(401).json({satusCode:401,message:'Unauthorized admin '})
          }else{
@@ -207,12 +186,10 @@ exports.logout=async(req,res,next)=>{
 exports.Query =async(req,res,next)=>{
    try{
        let files =req.files.avatar
-       console.log(files)
        var mutliplefiles =[]
         files.map((file,index)=>{
           mutliplefiles.push(file.filename)
         })
-      console.log(mutliplefiles,"vikas")
      
      const {Create,Review,Payroll,End_of_Service,Policy_and_Procedure,Talent_Acquisition,Training_and_Coaching} =req.body
 

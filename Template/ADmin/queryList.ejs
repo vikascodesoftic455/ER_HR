@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>AdminPanel</title>
+</head>
+<body>
+  <!--header section start-->
+     <section>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Ez-hr</a>
+          
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+              <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/api/adminDashboard/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/api/adminDashboard/AlluserDetails">UserList</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="/api/adminDashboard/getAllUserQuery">QuerLIst</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0" action="/api/adminDashboard/logout" method="post">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+              </form>
+            </div>
+        </nav>
+     </section>
+<!--header section end-->
+
+<!--main section start-->
+<table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Index</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Query</th>
+        <th scope="col">query_View</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% data.map((data,index) => { %>
+          <tr>
+            <td><%-index+1 %></td>
+            <td><%-data.users[0].name %></td>
+            <td><%-data.users[0].email %></td>
+            <td><%-data.Create %><%-data.ReView %>
+              <%-data.Payroll %> <%-data.End_of_Service %> 
+              <br> 
+              <%-data.Policy_and_Procedure %>   <%-data.Training_and_Coaching %> <%-data.Talent_Acquisition %>
+            </td>
+            <td>
+              <form action="/view/<%-data.id %>" method="get">
+                <button class="bg-success text-light btn btn-outline-success" type="submit" ><a  style="text-decoration: none; color: white;">view</a></button> 
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+      </tr>
+    
+    </tbody>
+  </table>
+
+<!--main section end-->
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+</body>
+</html>

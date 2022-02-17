@@ -5,7 +5,6 @@ const multerStroge =multer.diskStorage({
         cb(null,'public/upload/document')
     },
     filename:function(req,file,cb){
-        console.log(file)
         const data = Date.now() + '-' + Math.round(Math.random() * 1E9)+"-"+file.originalname
         cb(null,data)
     }

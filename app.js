@@ -8,6 +8,7 @@
  const chatRoutes =require('./router/chatRouter/chatRoutes')
  const messageRoutes =require('./router/messageRouter/messageRoutes')
  const adminRoutes= require('./router/AdminRoute/adminRouter')
+ const adminDashBoardRoute =require('./router/AdminDashboardRouter/AdminRouter')
  const cookieParser = require('cookie-parser')
  const app =express()
 
@@ -50,7 +51,12 @@ app.use(crors({
  app.use('/',userRoutes)
  app.use('/api/chat',chatRoutes)
  app.use("/api/message", messageRoutes)
-app.use('/api/data/admin',adminRoutes)
+ app.use('/api/data/admin',adminRoutes)
+ app.use('/api/adminDashboard/',adminDashBoardRoute)
+
+
+
+
  const environment = process.env.NODE_ENV;
 
 

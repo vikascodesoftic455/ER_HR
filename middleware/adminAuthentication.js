@@ -9,7 +9,7 @@ const isAdmin =(req,res,next)=>{
         if(!token){
           return("Admin Is Not Autharized")
         }
-        const data =  jwt.verify(token,SecretKey);
+        const data =  jwt.verify(token,adminSecretKey);
         if (!data) return res.status(401).json({ error: "Invalid token" });
         req.data = data;
           next()

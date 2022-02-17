@@ -48,27 +48,6 @@ exports.createChat =async(req,res,next)=>{
 }
 
 
-
-// exports.fetchChat =async(req,res,next)=>{
-//        try{
-//             Chat.find({ users: { $elemMatch: { $eq: req.data.userId } } })
-//             .populate("users", "-Password")
-//             .populate("latestMessage")
-//             .sort({ updatedAt: -1 })
-//             .then(async (results) => {
-//             results = await User.populate(results, {
-//                 path: "latestMessage.sender",
-//                 select: "name pic email",
-//             });
-//             res.status(200).send(results);
-//             });
-//       }catch(err){
-//         res.status(400).json({
-//             error:error.message
-//         })
-//       }
-// }
-
 exports.fetchChat=async(req,res,next)=>{
   try{
      const results =  await Chat.find({ users: { $elemMatch: { $eq: req.data.userId } } }) .populate("users", "-Password") .populate("latestMessage")  .sort({ updatedAt: -1 })
