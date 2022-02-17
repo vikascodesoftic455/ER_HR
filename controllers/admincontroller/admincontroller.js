@@ -8,6 +8,7 @@ const  adminSecretKey ="ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
 
 
 exports.adminLogInpage =(req,res,next)=>{
+     res.send("hello code")
      res.render('ADmin/login')
  }
 
