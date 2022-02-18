@@ -2,6 +2,7 @@ const express  =require('express')
 const authController =require('../../controllers/authController/authController')
 const isAuthentication  =require('../../middleware/authication')
 const Upload = require('../../middleware/uploadFiles')
+const {check} = require('express-validator');
 
 
 const router =express.Router()    
@@ -18,14 +19,27 @@ router
 router 
    .route('/pages-register')
    .get(authController.signupPage)
-   .post(authController.signup)
+   .post(
+         [
+             check('name','The name must be 3+ char long').isLength({min:3}),
+             check('email','Email is not a valid && please fill another email').normalizeEmail().isEmail().withMessage({message: 'Not an email',errorCode: 1}),
+             check('Password','The password must be 8+ chars long and contain a number') .not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number'),
+             check('PasswordCofirm','passwordConfirmation field must have the same value as the password field').not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number')
+         ],
+         authController.signup
+        )
 
 
 
 router
     .route('/login')
     .get(authController.LogInpage)
-    .post(authController.login)   
+    .post(
+          [
+            check('email','Email is not a valid').normalizeEmail().isEmail(),
+            check('Password','The Password must be 8+char long').isLength({min:8}),
+          ],  
+        authController.login)   
 
 
 

@@ -3,6 +3,7 @@
  const express =require('express')
  const path =require('path')
  const crors =require('cors')
+ const ejsLint = require('ejs-lint');
  const dbconn =require('./db/db')
  const userRoutes =require('./router/Usersrouter/userRoutes')
  const chatRoutes =require('./router/chatRouter/chatRoutes')
@@ -16,7 +17,7 @@
 
 
  /// Server that can be start
-const port  =process.env.PORT || 8000
+const port  = 8000
 
 
  // Body parser,rendering data body into req.body
@@ -24,7 +25,7 @@ app.use(express.urlencoded({extended:true,limit:'100kb'}))
 app.use(express.json({limit:'100kb'}))
 
 
-app.set('views','Template')
+app.set('views','template')
 app.set('view engine','ejs')
 
 

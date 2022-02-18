@@ -12,6 +12,15 @@
     </head>
     <body data-smooth-scroll-offset="77">
         <div class="nav-container"> </div>
+        <% if(typeof message != 'undefined') { %>
+            <% message.map((data) => { %>
+            <div class="alert alert-warning alert-dismissible fade show" style="width: 30%; margin-left: 45%;" role="alert">
+                <strong><%-data.msg %></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% }) %>
+        <% } %>
+        <div class="nav-container"> </div>
         <div class="main-container">
             <section class="switchable">
                 <div class="container">

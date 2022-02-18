@@ -3,8 +3,7 @@ const Query =require('../../model/Query')
 const fs =require('fs')
 const jwt =require('jsonwebtoken')
 const SecretKey ="vhdscsjfcsufjscvsvcsakvcMcvgwgad"
-const path =require('path')
-const routerdash=path.join(__dirname,'../../public/upload/document/')
+const  {validationResult} = require('express-validator');
 
 
 
@@ -17,62 +16,53 @@ exports.userPanel =async(req,res,next)=>{
      })
   }
 
-
-exports.signupPage =(req,res,next)=>{
-    res.render('signup')
-}
+ exports.signupPage =async(req,res,next)=>{
+     res.render('signup')
+ }
 
 
 exports.signup =async(req,res,next)=>{
      try{
-        const {name,email,Password,PasswordCofirm} =req.body
-        User.findOne({email:email},(err,user)=>{
-              if(user){
-                   res.status(202).json({
-                        status:"Accepted",
-                        message:'user Already is Register',
-                        HowToCreateUsreSignup:req.requestTime,
-                   })
-              }else{
-               const newUser = new User({
-                    name,
-                    email,
-                    Password,
-                    PasswordCofirm
-                  })
-                newUser.save(err=>{
-                     if(err){
-                      res
-                         .status(500)
-                         .json({
-                         status:"fail",
-                         message:err,
-                         HowToCreateUsreSignup:req.requestTime
-                     })
-                     }else{
-                         res
-                           .status(201) 
-                           .json({
-                              status:"Sucess",
-                              message:'user Reqisterd Sucessfully',
-                              HowToCreateUsreSignup:req.requestTime,
-                           })
-                     }
-                })
-                
-                  
-              }
+          
+          const errors =validationResult(req)
+          let message;
+          if(!errors.isEmpty()){
+                message =errors.array()
+          }
+          const {name,email,Password,PasswordCofirm} =req.body
+          User.findOne({email:email},(err,user)=>{
+               if(user){
+                    res.status(400).json({
+                       message:'User is already exits'
+                    })
+               }else{
+                    const newUser = new User({
+                         name,
+                         email,
+                         Password,
+                         PasswordCofirm
+                    })
+                    newUser.save(err=>{
+                         if(err){
+                              const err ='User not be register && please try again'
+                              message.push(err)
+                         }else{
+                              res.redirect('/login')
+                         }
+                    })
+                    
+                    
+               }
+          })
+
+         res.render('signup',{
+              message:message,
          })
           
      }catch(err){
-          res
-          .status(500)
-          .json({
-          status:"fail",
-          message:err,
-          HowToCreateUsreSignup:req.requestTime
-      })
+         console.log(err)
      }
+
 }
 
 exports.LogInpage =(req,res,next)=>{
@@ -81,6 +71,11 @@ exports.LogInpage =(req,res,next)=>{
 
 exports.login =async(req,res,next)=>{
       try{ 
+               const errors =validationResult(req)
+               let message;
+               if(!errors.isEmpty()){
+                    message =errors.array()
+               }
             const {email,password} =req.body
             if(!email || !password){
                res
@@ -110,6 +105,9 @@ exports.login =async(req,res,next)=>{
                       message:'Incorrect the email && password',
                  })
             }
+            res.render('login',{
+               message:message
+            })
       }catch(err){
          res
           .status(500)
