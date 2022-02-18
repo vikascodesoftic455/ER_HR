@@ -3,6 +3,7 @@ const Query =require('../../model/Query')
 const jwt =require('jsonwebtoken')
 
 const  adminSecretKey ="ro8BS6Hiivgzy8Xuu09JDjlNLnSLldY5"
+const  {validationResult} = require('express-validator');
 
 
 
@@ -13,6 +14,13 @@ exports.adminLogInpage =(req,res,next)=>{
 
 exports.login =async(req,res,next)=>{
      try{ 
+
+          const errors =validationResult(req)
+          var message;
+          if(!errors.isEmpty()){
+                message =errors.array()
+          }
+
            const {email,password} =req.body
            if(!email || !password){
               res
@@ -53,12 +61,8 @@ exports.login =async(req,res,next)=>{
                 })
            }
      }catch(err){
-        res
-         .status(500)
-         .json({
-              status:"fail",
-              message:err,
-              HowToCreateUsreSignup:req.requestTime
+        res.render('ADmin/login',{
+             message:message
         })
      }
 }

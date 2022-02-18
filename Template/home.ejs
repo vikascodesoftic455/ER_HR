@@ -28,7 +28,7 @@
               </li>
             </ul>
             <form action="/logout" method="post">
-              <button class="btn btn-outline-success" type="submit">LOGOUT</button>
+              <button class="btn btn-outline-success" type="submit" onclick="logout()">LOGOUT</button>
             </form>
           </div>
         </div>
@@ -102,5 +102,10 @@
         
         </tbody>
       </table>
+      <script>
+            function logout(){
+                alert('logout sucessFully ')
+            }
+      </script>
 </body>
 </html>
