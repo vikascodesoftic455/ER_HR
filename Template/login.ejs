@@ -3,6 +3,7 @@
         <meta charset="utf-8">
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/stack-interface.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/theme.css" rel="stylesheet" type="text/css" media="all" />
@@ -20,6 +21,7 @@
             </div>
             <% }) %>
         <% } %>
+   
         <div class="nav-container"> </div>
         <div class="main-container">
             <section class="switchable">
@@ -31,8 +33,8 @@
                                 <hr>
                                 <form action="/login" method="post">
                                     <div class="row">
-                                        <div class="col-12"> <input type="email" name="email" placeholder="Email Address"> </div>
-                                        <div class="col-12"> <input type="password" name="password" placeholder="Password"> </div>
+                                        <div class="col-12"> <input type="email" name="email" placeholder="Email Address" required/> </div>
+                                        <div class="col-12"> <input type="password" name="password" placeholder="Password" required/> </div>
                                         <div class="col-12"> <button type="submit" class="btn btn--primary">LOGIN</button> </div>
                                     </div>
                                 </form>
@@ -49,6 +51,7 @@
         <script src="js/parallax.js"></script>
         <script src="js/smooth-scroll.min.js"></script>
         <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
     </body>
 

@@ -36,8 +36,8 @@ router
     .get(authController.LogInpage)
     .post(
           [
-            check('email','Email is not a valid').normalizeEmail().isEmail(),
-            check('Password','The Password must be 8+char long').isLength({min:8}),
+            check('email','Email is not avlid').normalizeEmail().isEmail().withMessage('filed are required'),
+            check('password','The Password must be 8+char long').isLength({min:8}).isEmpty()
           ],  
         authController.login)   
 

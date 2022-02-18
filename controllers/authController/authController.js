@@ -33,7 +33,7 @@ exports.signup =async(req,res,next)=>{
           User.findOne({email:email},(err,user)=>{
                if(user){
                     res.status(400).json({
-                       message:'User is already exits'
+                       msg:'User is already exits'
                     })
                }else{
                     const newUser = new User({
@@ -42,22 +42,12 @@ exports.signup =async(req,res,next)=>{
                          Password,
                          PasswordCofirm
                     })
-                    newUser.save(err=>{
-                         if(err){
-                              const err ='User not be register && please try again'
-                              message.push(err)
-                         }else{
-                              res.redirect('/login')
-                         }
-                    })
-                    
+                    newUser.save()    
                     
                }
           })
 
-         res.render('signup',{
-              message:message,
-         })
+       res.redirect('/login')
           
      }catch(err){
          console.log(err)
@@ -71,51 +61,40 @@ exports.LogInpage =(req,res,next)=>{
 
 exports.login =async(req,res,next)=>{
       try{ 
-               const errors =validationResult(req)
-               let message;
-               if(!errors.isEmpty()){
-                    message =errors.array()
-               }
-            const {email,password} =req.body
-            if(!email || !password){
-               res
-                 .statusS(400)
-                  .json({
-                        message:'please provide the email && password',
-                        satusCode:400
-                    })
-            }
-            const user =await User.findOne({
-               $and:[
-                    {email:email},
-                    {role:'user'}
-                    ]
-           }).select('+Password')
-            const correct = await user.correctPassword(password,user.Password)
-            if(correct==true){
-                var token = jwt.sign({
-                    userId:user.id
-               },SecretKey,{ expiresIn :'1h' })
-                   
-                  res.cookie('jwt',token,{ httpOnly: true, secure: true, maxAge: 3600000 })
-                  res.redirect('/user')
-            }else{
-                 res.status(401).json({
-                      satusCode:401,
-                      message:'Incorrect the email && password',
-                 })
-            }
-            res.render('login',{
-               message:message
-            })
+                         const errors =validationResult(req)
+                         var message;
+                         if(!errors.isEmpty()){
+                              message =errors.array()
+                              console.log(message)
+                         }
+                    const {email,password} =req.body
+                    const user =await User.findOne({
+                         $and:[
+                              {email:email},
+                              {role:'user'}
+                              ]
+                    }).select('+Password')
+                    const correct = await user.correctPassword(password,user.Password)
+                    if(correct==true){
+                         var token = jwt.sign({
+                              userId:user.id
+                         },SecretKey,{ expiresIn :'1h' })
+                         
+                         res.cookie('jwt',token,{ httpOnly: true, secure: true, maxAge: 3600000 })
+                         res.redirect('/user')
+                    }else{
+                         res.status(401).json({
+                              satusCode:401,
+                              message:'Incorrect the email && password',
+                         })
+                    }
+             res.render('login',{
+                  msg:'Login sucessFully'
+             })    
       }catch(err){
-         res
-          .status(500)
-          .json({
-               status:"fail",
-               message:err,
-               HowToCreateUsreSignup:req.requestTime
-         })
+          res.render('login',{
+               message:message,
+            })
       }
 }
 

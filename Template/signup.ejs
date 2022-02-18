@@ -37,11 +37,11 @@
                                 <hr class="short">
                                 <form action="/pages-register" method="post">
                                     <div class="row">
-                                        <div class="col-12"> <input type="text" name="name" placeholder="Type your Name"> </div>
-                                        <div class="col-12"> <input type="email" name="email" placeholder=" Type your Email Address"> </div>
-                                        <div class="col-12"> <input type="password" name="Password" placeholder=" Type your Password"> </div>
-                                        <div class="col-12"> <input type="password" name="PasswordCofirm" placeholder=" Type your Password"> </div>
-                                        <div class="col-12"> <button type="submit" class="btn btn--primary">Signup</button> </div>
+                                        <div class="col-12"> <input type="text" name="name" placeholder="Type your Name" required/> </div>
+                                        <div class="col-12"> <input type="email" name="email" placeholder=" Type your Email Address"  required/> </div>
+                                        <div class="col-12"> <input type="password" id="password" name="Password" placeholder=" Type your Password"  value="" required/> </div>
+                                        <div class="col-12"> <input type="password" id="passwordconfirm" name="PasswordCofirm" value="" placeholder=" Type your Password" required/> </div>
+                                        <div class="col-12"> <button type="submit" class="btn btn--primary" onclick="pssawordchecking()">Signup</button> </div>
                                         <div class="col-12"> <span class="type--fine-print">By signing up, you agree to the <a href="#">Terms of Service</a></span> </div>
                                     </div>
                                     </form>
@@ -59,6 +59,15 @@
         <script src="js/smooth-scroll.min.js"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script>
+            function pssawordchecking(){
+                const password =document.getElementById("password").value
+                const passwordconfirm =document.getElementById("passwordconfirm").value
+                if(password!=passwordconfirm){
+                    alert('Password are not be same && please fill the same Password')
+                }
+            }
+       </script>
 
     </body>
 
