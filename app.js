@@ -17,7 +17,7 @@
 
 
  /// Server that can be start
-const port  = 8000
+const port  = process.env.PORT || 8000
 
 
  // Body parser,rendering data body into req.body
@@ -25,7 +25,7 @@ app.use(express.urlencoded({extended:true,limit:'100kb'}))
 app.use(express.json({limit:'100kb'}))
 
 
-app.set('views','template')
+app.set('views','Template')
 app.set('view engine','ejs')
 
 
