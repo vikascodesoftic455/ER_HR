@@ -35,7 +35,7 @@
                             <div class="mt--3">
                              <h1>User Signup.</h1>
                                 <hr class="short">
-                                <form action="/pages-register" method="post">
+                                <form  action="/pages-register" method="post">
                                     <div class="row">
                                         <div class="col-12"> <input type="text" name="name" placeholder="Type your Name" required/> </div>
                                         <div class="col-12"> <input type="email" name="email" placeholder=" Type your Email Address"  required/> </div>
@@ -65,8 +65,12 @@
                 const passwordconfirm =document.getElementById("passwordconfirm").value
                 if(password!=passwordconfirm){
                     alert('Password are not be same && please fill the same Password')
+                }else{
+                    alert('Signup sucessfully')
                 }
             }
+
+            
        </script>
 
     </body>
