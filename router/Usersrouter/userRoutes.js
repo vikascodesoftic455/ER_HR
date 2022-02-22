@@ -21,10 +21,10 @@ router
    .get(authController.signupPage)
    .post(
          [
-             check('name','The name must be 3+ char long').isLength({min:3}),
-             check('email','Email is not a valid && please fill another email').normalizeEmail().isEmail().withMessage({message: 'Not an email',errorCode: 1}),
-             check('Password','The password must be 8+ chars long and contain a number') .not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number'),
-             check('PasswordCofirm','passwordConfirmation field must have the same value as the password field').not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number')
+             check('name','The name must be 3+ char long').isLength({min:3}).notEmpty(),
+             check('email','Email is not a valid && please fill another email').normalizeEmail().isEmail().withMessage({message: 'Not an email',errorCode: 1}).notEmpty(),
+             check('Password','The password must be 8+ chars long and contain a number') .not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number').notEmpty(),
+             check('PasswordCofirm','passwordConfirmation field must have the same value as the password field').equals('Password').isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number').notEmpty(),
          ],
          authController.signup
         )
