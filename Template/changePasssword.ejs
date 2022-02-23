@@ -1,0 +1,55 @@
+<%- include('./partials/header.ejs') %>
+<section class="vh-100 bg-image" style="background-color: whitesmoke;">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6" style="width: 900px; margin-top: 50px;">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">ChangePassword</h2>
+  
+                <form action="/changepassword" method="post">
+  
+  
+                  <div class="form-outline mb-4">
+                    <input type="password" name="oldPassword"  id="form3Example3cg" class="form-control form-control-lg" value="" required/>
+                    <label class="form-label" for="form3Example3cg">Old Password</label>
+                  </div>
+  
+                  <div class="form-outline mb-4">
+                    <input type="password" name="newPassword"   id="form3Example4cg" class="form-control form-control-lg" value="" required/>
+                    <label class="form-label" for="form3Example4cg">New Password</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="password" name="confirmNewpassword"   id="form3Example5cg" class="form-control form-control-lg" value="" required/>
+                    <label class="form-label" for="form3Example4cg">confirmpassword</label>
+                  </div>
+
+                  <div class="d-flex justify-content-center">
+                    <button type="submit"  onclick="change()" class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body">ChangePassword</button>
+                  </div>
+  
+  
+                </form>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<%- include('./partials/footer.ejs') %>
+<script>
+      const oldPassword =document.getElementById("form3Example3cg").value
+      console.log("oldPassword",oldPassword)
+      const newPassword =document.getElementById("form3Example4cg").value
+      const confirmNewpassword =document.getElementById('form3Example5cg').value
+      function change(){
+          console.log(oldPassword)
+          console.log(newPassword)
+          console.log(confirmNewpassword)
+      }
+</script>

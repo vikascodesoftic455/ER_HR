@@ -10,6 +10,7 @@ const  {validationResult} = require('express-validator');
 
 exports.adminLogInpage =(req,res,next)=>{
      res.render('ADmin/login')
+
  }
 
 exports.login =async(req,res,next)=>{

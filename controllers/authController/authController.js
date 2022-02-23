@@ -1,5 +1,6 @@
 const User =require('../../model/admin')
 const Query =require('../../model/Query')
+const bcrypt = require('bcrypt');
 const fs =require('fs')
 const jwt =require('jsonwebtoken')
 const SecretKey ="vhdscsjfcsufjscvsvcsakvcMcvgwgad"
@@ -11,6 +12,7 @@ exports.userPanel =async(req,res,next)=>{
      const data = await Query.find({users:req.data.userId}).populate('users','-role')
      const admin =await User.findOne({role:'admin'})
      res.render('home',{
+          user:req.data,
           data:data,
           admin:admin
      })
@@ -77,7 +79,9 @@ exports.login =async(req,res,next)=>{
                     const correct = await user.correctPassword(password,user.Password)
                     if(correct==true){
                          var token = jwt.sign({
-                              userId:user.id
+                              userId:user.id,
+                              name:user.name,
+                              email:user.email
                          },SecretKey,{ expiresIn :'1h' })
                          
                          res.cookie('jwt',token,{ httpOnly: true, secure: true, maxAge: 3600000 })
@@ -118,28 +122,37 @@ exports.dashboard =async(req,res,next)=>{
      }
 }
 
+exports.getChangePassword =(req,res,next)=>{
+     console.log("hello")
+     res.render('changePasssword')
+}
 
 
  exports.ChangePassword  =async(req,res,next)=>{
    try{
+       
+               const errors =validationResult(req)
+               let message;
+               if(!errors.isEmpty()){
+                    message =errors.array()
+               }
+      if(newPassword===confirmNewpassword){
 
-     const {oldPassword,newPassword,confirmNewpassword}=req.body
-          if(newPassword===confirmNewpassword){
-                if(oldPassword!=newPassword){
-                   const admin = awaitUser.findById({_id:req.data.userId}).select('+Password')
-                    admin.Password =newPassword
-                    admin.PasswordCofirm=confirmNewpassword
-                    await admin.save()
-                    res.status(201).json({
-                         message:'Password changed SucessFully'
-                    })
-                }
-          }else{
-               res.status(405).json({
-                    statuscode:405,
-                    message:"New Password and confirm password are not same "
-               })
-          }         
+            if(oldPassword!=newPassword){
+               const admin = awaitUser.findById({_id:req.data.userId}).select('+Password')
+                admin.Password =newPassword
+                admin.PasswordCofirm=confirmNewpassword
+                await admin.save()
+                res.status(201).json({
+                     message:'Password changed SucessFully'
+                })
+            }
+      }else{
+           res.status(405).json({
+                statuscode:405,
+                message:"New Password and confirm password are not same "
+           })
+      }         
    }catch(err){
         console.log(err)
               res.status(400).json({
@@ -199,3 +212,21 @@ exports.getView=async(req,res,next)=>{
 
 
 
+exports.getProfile =(req,res,next)=>{
+     console.log(req.data)
+    res.render('profile',{
+         user:req.data
+    })
+}
+
+exports.updateProfile =async(req,res,next)=>{
+  const email =req.data.email
+  console.log(email)
+    await User.findOneAndUpdate({email:email},req.body,(err,data)=>{
+       if(err){
+            console.log(err)
+       }else{
+            console.log('profile is updayted sucessfully',data)
+       }
+  })
+}

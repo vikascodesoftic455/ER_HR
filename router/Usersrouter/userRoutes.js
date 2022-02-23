@@ -39,7 +39,8 @@ router
             check('email','Email is not avlid').normalizeEmail().isEmail().withMessage('filed are required'),
             check('password','The Password must be 8+char long').isLength({min:8}).isEmpty()
           ],  
-        authController.login)   
+            authController.login
+        )   
 
 
 
@@ -53,17 +54,17 @@ router
 
 router
     .route('/changepassword')
-    .post(isAuthentication,
+    .get(isAuthentication,authController.getChangePassword)
+    .post(
+        [
+            check('newPassword','The Password must be 8+char long').isLength({min:8}).isEmpty(),
+            check('confirmNewpassword','The Password must be 8+char long').isLength({min:8}).isEmpty()
+
+          ],isAuthentication,
         authController.ChangePassword
         )        
 
 
-// router
-//      .route('/getAllUsers')  
-//      .get(
-//          isAuthentication,
-//          authController.getAllUsers
-//      )  
      
      
 router
@@ -85,7 +86,9 @@ router
 
 
 
-router.route('/view/:id').get(authController.getView)  
+router.route('/view/:id').get( isAuthentication,authController.getView)  
+
+router.route('/profile').get(isAuthentication,authController.getProfile).patch([check('name','The name must be 3+ char long').isLength({min:3}).notEmpty(),],authController.updateProfile)
 
 
-   module.exports=router
+module.exports=router
