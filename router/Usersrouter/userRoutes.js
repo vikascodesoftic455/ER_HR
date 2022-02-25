@@ -22,9 +22,7 @@ router
    .post(
          [
              check('name','The name must be 3+ char long').isLength({min:3}).notEmpty(),
-             check('email','Email is not a valid && please fill another email').normalizeEmail().isEmail().withMessage({message: 'Not an email',errorCode: 1}).notEmpty(),
-             check('Password','The password must be 8+ chars long and contain a number') .not().isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number').notEmpty(),
-             check('PasswordCofirm','passwordConfirmation field must have the same value as the password field').equals('Password').isIn(['123', 'password', 'god']).withMessage('Do not use a common word as the password').isLength({min:8}).matches(/\d/).withMessage('must contain a number').notEmpty(),
+             check('email','Email is not a valid && please fill another email').isEmail().withMessage({message: 'Not an email',errorCode: 1}).notEmpty(),
          ],
          authController.signup
         )
@@ -36,8 +34,7 @@ router
     .get(authController.LogInpage)
     .post(
           [
-            check('email','Email is not avlid').normalizeEmail().isEmail().withMessage('filed are required'),
-            check('password','The Password must be 8+char long').isLength({min:8}).isEmpty()
+            check('email','Email is not avlid').isEmail().withMessage('filed are required')
           ],  
             authController.login
         )   
@@ -57,8 +54,8 @@ router
     .get(isAuthentication,authController.getChangePassword)
     .post(
         [
-            check('newPassword','The Password must be 8+char long').isLength({min:8}).isEmpty(),
-            check('confirmNewpassword','The Password must be 8+char long').isLength({min:8}).isEmpty()
+            check('newPassword','The Password must be 8+char long').isLength({min:5}).isEmpty(),
+            check('confirmNewpassword','The Password must be 8+char long').isLength({min:5}).isEmpty()
 
           ],isAuthentication,
         authController.ChangePassword

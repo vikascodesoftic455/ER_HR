@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const fs =require('fs')
 const jwt =require('jsonwebtoken')
 const SecretKey ="vhdscsjfcsufjscvsvcsakvcMcvgwgad"
-const  {validationResult} = require('express-validator');
+const  {validationResult, body} = require('express-validator');
+const { ConnectionStates } = require('mongoose');
+const { json } = require('body-parser');
 
 
 
@@ -24,35 +26,31 @@ exports.userPanel =async(req,res,next)=>{
 
 
 exports.signup =async(req,res,next)=>{
-     try{
-          
-          const errors =validationResult(req)
-          let message;
-          if(!errors.isEmpty()){
-                message =errors.array()
-          }
-          const {name,email,Password,PasswordCofirm} =req.body
-          User.findOne({email:email},(err,user)=>{
+     try{   
+          const {name,email,password,PasswordCofirm} =req.body
+          User.findById({email:email},(err,user)=>{
                if(user){
-                    res.status(400).json({
-                       msg:'User is already exits'
-                    })
+                      res.status(400).json(
+                           {
+                                msg:"User is Already exists"
+                           }
+                      )
                }else{
                     const newUser = new User({
                          name,
                          email,
-                         Password,
+                         Password:password,
                          PasswordCofirm
                     })
-                    newUser.save()    
-                    
+                    newUser.save() 
                }
           })
-
        res.redirect('/login')
           
      }catch(err){
-         console.log(err)
+         res.status(500).json({
+              msg:"Internal server Error"
+         })
      }
 
 }
@@ -123,7 +121,6 @@ exports.dashboard =async(req,res,next)=>{
 }
 
 exports.getChangePassword =(req,res,next)=>{
-     console.log("hello")
      res.render('changePasssword')
 }
 

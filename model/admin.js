@@ -8,7 +8,8 @@ const UserSchema = new mongoose.Schema({
     name:{
         type:String,
         required:[true,'Please tell us your name'],
-        trim:true
+        trim:true,
+        minlength:3
     },
     email:{
         type:String,
@@ -21,13 +22,13 @@ const UserSchema = new mongoose.Schema({
     Password:{
         type:String,
         required:[true,'Please provide a  password'],
-        minlength:8,
+        minlength:5,
         select:false
     },
     PasswordCofirm:{
         type:String,
         required:[true,'Please confirm your password'],
-        minlength:8,
+        minlength:5,
         validate:{
             validator:function(Cpassword){
                 return Cpassword===this.Password

@@ -3,11 +3,6 @@
         <meta charset="utf-8">
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-        <link href="css/stack-interface.css" rel="stylesheet" type="text/css" media="all" />
-        <link href="css/theme.css" rel="stylesheet" type="text/css" media="all" />
-        <link href="css/custom.css" rel="stylesheet" type="text/css" media="all" /> -->
        <!-- Font Awesome -->
             <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
@@ -23,7 +18,8 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
             rel="stylesheet"
             />
-
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     </head>
 
 
@@ -87,14 +83,7 @@
 </nav>
 <!-- Navbar -->
         <div class="nav-container"> </div>
-        <% if(typeof message != 'undefined') { %>
-            <% message.map((data) => { %>
-            <div class="alert alert-warning alert-dismissible fade show" style="width: 30%; margin-left: 45%;" role="alert">
-                <strong><%-data.msg %></strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <% }) %>
-        <% } %>
+            <div id="loginsucess"></div>
 
         <section class="vh-100 bg-image" style="background-color: whitesmoke;">
           <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -103,9 +92,9 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                   <div class="card" style="border-radius: 15px;">
                     <div class="card-body p-5">
-                      <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                      <h2 class="text-uppercase text-center mb-5">LOGIN a Account?</h2>
         
-                      <form action="/login" method="post">
+                      <form action="/login" onsubmit="login()" method="post">
         
         
                         <div class="form-outline mb-4">
@@ -119,14 +108,14 @@
                         </div>
 
                         <div class="d-flex justify-content-center">
-                          <button type="submit" onclick="login()" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
+                          <button type="submit"  class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
                         </div>
         
                         <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/pages-register" class="fw-bold text-body"><u>Create a New account?</u></a></p>
         
                       </form>
         
-                    </div>ç
+                    </div>
                   </div>
                 </div>
               </div>
@@ -138,8 +127,9 @@
       
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
           <script>
+            const loginsucess  =document.getElementById('loginsucess')
               function login(){
-                  alert('user login sucessfully')
+                  loginsucess.innerHTML='User Login SucessFully'
               }
           </script>
 
